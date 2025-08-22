@@ -1,4 +1,4 @@
-# First Disciple: Grasscutter in Docker
+# First Disciple: Grasscutter in Docker in Android
 
 ![](./images/logo.png)
 
@@ -8,25 +8,32 @@
 
 I liked an online FPS looter-shooter before, and I spent a lot of time on it, even buying and upgrading my computer. Then I witnessed it becoming another ugly money-bragging monster just like every other online games did ("You either die a hero, or live long enough to see yourself become the villain", huh?). I have no choice but to leave the game before it become unbearable. Even worse, the company have deleted the campaign warfares and maps of first 3 years. As the game is online-only, I, as a player and consumer, could no longer access the content even I have paid for them.
 
-![](./images/we-dont-understand.png)
-
 A few months ago before initialization of this project, one of my friends asked if one can play a Windows-exclusive card game on phone (in this case, an Android phone). While it is technically feasible, I did not try that solution as I did not have the capacity to work on it at that time.
 
-I just read [an article](https://blog.kronis.dev/blog/stop-killing-games) about the recent "Stop Killing Games" movement. I noticed a project mentioned in the post, which allows players to play a certain [gacha game](## "Yes, you've guessed it, G****** ") locally without the risk of server getting shut down or access getting blocked. While the game is not dead yet (actually being very profitable now and in near future), it does not stop players to build private servers like Minecraft.
+I just read [an article](https://blog.kronis.dev/blog/stop-killing-games) about the recent "Stop Killing Games" movement. I noticed a project mentioned in the post, which allows players to play a certain [gacha game](## "Yes, you've guessed it, G****** I*****. (whisper) Gotta censor the name, you know.") locally / with a private server. While the game is not dead yet (actually being very profitable now and in near future), it does not stop players to build private servers like Minecraft.
 
-![](./images/we-got-a-city-to-burn.gif)
+<img center src='./images/we-got-a-city-to-burn.gif' style="margin: auto">
 
-These leads me to think of a possibility: <b>running a Windows OS in Android to play whatever games we want</b>. I mean, why not build the off-grid version on Android? After all, Android is Linux, which means Docker theoretically can work on it. Of course, trying to run a 100GB+ RPG would be reckless, but running some modded/lightweight/single-player games should be good to go.<br>Some may question as Geekerwan have done [something similar](https://www.youtube.com/watch?v=nrvnpFCcZeA) already. The core difference is that Geekerwan replaced the base OS of a phone from Android to Windows (essentially created a Windows Phone), while what I want is to access like Windows and retain the functionality of Android (more like a Hackintosh-enabled PC). 
+These leads me to think of a possibility: <b>running a Windows OS in Android to play whatever games we want</b>.<br> I mean, why not build the off-grid version on Android? After all, Android is Linux, which means Docker theoretically can work on it. Of course, trying to run a 100GB+ RPG would be reckless, but running some modded/lightweight/single-player games should be good to go. With improved performace of modern Smartphone, we can even run a tiny-scale server on it, right?
+
+Some may question as Geekerwan have done [something similar](https://www.youtube.com/watch?v=nrvnpFCcZeA) already. The core difference is that Geekerwan replaced the base OS of a phone from Android to Windows (essentially created a Windows Phone, but with Android CPU), while what I want is to access like Windows and retain the functionality of Android (more like a Hackintosh-enabled PC). 
 
 ## Aim of the project
 The long-term goal of this project is to work as a Proof-of-concept (POC) of running Windows games on Android, just like Samsung's DeX mode.
 
-The scope of this project is to create a Docker image (or a package) to run [Grasscutter](https://github.com/Grasscutters/Grasscutter) project and its launcher ([Cultivation](https://github.com/Grasscutters/Cultivation)) on any Linux system (including Android) without the need to connect main server.
+The scope of this project are:
+- to create a Docker image (or a package) to run [Grasscutter](https://github.com/Grasscutters/Grasscutter) project and its launcher ([Cultivation](https://github.com/Grasscutters/Cultivation)) on any Linux system (including Android) without the need to connect main server
+- to create a highly detailed documentation of any people looking for a solution
 
 
 ## Procedures
+ 
+> [!WARNING]
+> ![](./images/we-dont-understand.png)
+
 ### 0 - Building a grasscutter in Windows VM 
 (You can skip to Step 1 if you do not need this testing environment)
+
 Here, I follow the official steps and build a local grasscutter first:
 1. Set the environment:
     <table>
@@ -64,7 +71,7 @@ With the installation experience and knowing how to run that game, let's build a
 
 1. 
 
-### 2 - Packaging as a docker-compose.yaml / Docker image
+### 2 - Packaging as a Docker image
 > Core Question in mind: <ol><li></li></ul>
 
 <b>TBC</b>
@@ -90,7 +97,7 @@ With the installation experience and knowing how to run that game, let's build a
 - [GUI of Linux system in docker container](https://docs.linuxserver.io/images/docker-webtop)
 
 ### Image used:
-- 
+- https://www.reddit.com/r/destiny2/comments/u0euh1/the_first_words_you_hear_from_the_ghost/
 - 
 - 
 
