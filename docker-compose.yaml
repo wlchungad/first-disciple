@@ -1,0 +1,62 @@
+services:
+  game-db:
+    container_name: GI-mongo
+    image: mongodb/mongodb-community-server:8.0.3-ubi9
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=Passw0rd
+    ports:
+      - '27017:27017'
+    networks:
+      - app-network
+    # volumes:
+    #   - type: bind
+    #     source: ./data
+    #     target: /data/db
+    volumes:
+      - mongo-data:/data
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          memory: 6M
+  game-engine:
+    container_name: GI-engine
+    image: "first-disciple:4.0-jp"
+    restart: on-failure
+    ports:
+      - 22102:22102
+      - 443:443
+      - 80:80
+      - 8888:8888
+  game-console:
+    container_name: GI console
+    image: dockurr/windows
+    environment:
+      VERSION: "11"
+      CPU_CORES: "1"
+      RAM_SIZE: "2G"
+    devices:
+      - /dev/kvm
+      # - /dev/net/tun
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 8006:8006 # that's the port for us to access GUI by Edge
+      - 3389:3389/tcp
+      - 3389:3389/udp
+    # volumes:
+    #   - ./windows:/storage
+    restart: on-failure
+    stop_grace_period: 10m
+
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo-data:

@@ -57,3 +57,6 @@
 
     rc-update add docker
     ```
+
+## Verify
+Run `docker run hello-world` and check result
