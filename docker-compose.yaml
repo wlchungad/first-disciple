@@ -25,7 +25,7 @@ services:
           memory: 6M
   game-engine:
     container_name: GI-engine
-    image: "first-disciple:4.0-jp"
+    image: "first-disciple:4.0-jp-openjdk"
     restart: on-failure
     ports:
       - 22102:22102
