@@ -1,6 +1,5 @@
 services:
-  game-db:
-    container_name: GI-mongo
+  mongodb:
     image: mongodb/mongodb-community-server:8.0.3-ubi9
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
@@ -9,10 +8,6 @@ services:
       - '27017:27017'
     networks:
       - app-network
-    # volumes:
-    #   - type: bind
-    #     source: ./data
-    #     target: /data/db
     volumes:
       - mongo-data:/data
     deploy:
@@ -24,7 +19,8 @@ services:
         reservations:
           memory: 6M
   game-engine:
-    container_name: GI-engine
+    depends_on:
+      - mongodb
     image: "first-disciple:4.0-jp-openjdk"
     restart: on-failure
     ports:
@@ -32,11 +28,10 @@ services:
       - 443:443
       - 80:80
       - 8888:8888
-  game-console:
-    container_name: GI console
+  windows:
     image: dockurr/windows
     environment:
-      VERSION: "11"
+      VERSION: "10"
       CPU_CORES: "1"
       RAM_SIZE: "2G"
     devices:
@@ -52,7 +47,6 @@ services:
     #   - ./windows:/storage
     restart: on-failure
     stop_grace_period: 10m
-
 
 networks:
   app-network:

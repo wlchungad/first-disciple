@@ -1,43 +1,38 @@
-# grasscutter
-FROM openjdk:17.0.2-slim 
-# FROM eclipse-temurin:17-jdk-alpine
+# Start the base model with openjdk 17 official images
+FROM openjdk:17.0.2-slim AS builder
+
 # First of all, run apt update and install required packages in one go
-# While we are installing packages, we will also include MongoDB in this image
-# RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.9/main' >> /etc/apk/repositories && echo 'http://dl-cdn.alpinelinux.org/alpine/v3.9/community' >> /etc/apk/repositories
-RUN apt update && \
-    apt install -y git vim procps screen unzip
+RUN apt update && apt install -y git vim procps screen wget unzip && apt clean && rm -rf /var/lib/apt/lists/*
 
 # We then compile the JAR
 WORKDIR /opt
-RUN git clone --recurse-submodules https://github.com/Grasscutters/Grasscutter.git
+RUN git clone --depth 1 --recurse-submodules https://github.com/Grasscutters/Grasscutter.git
 WORKDIR /opt/Grasscutter
-RUN chmod +x gradlew
-RUN ./gradlew jar
-# also compiling the handbook
-# RUN ./gradlew generateHandbook
+RUN chmod +x gradlew && ./gradlew jar
 
-WORKDIR /Grasscutter
-RUN cp /opt/Grasscutter/grasscutter*.jar .
+# Move to a proper folder after compliation
+# WORKDIR /Grasscutter
+# RUN cp -rf /opt/Grasscutter /Grasscutter
 
-# since we are build from scratch, we can just call the 4.0.0 package directly
-# remember to use quotes for URLs 
-WORKDIR /tmp
-# Download Audio Pack here
-# For Chinese: https://autopatchhk.yuanshen.com/client_app/download/pc_zip/20230804185804_eTmE8EZjJZdAJapq/Audio_Chinese_4.0.0.zip
-# For English: https://autopatchhk.yuanshen.com/client_app/download/pc_zip/20230804185804_eTmE8EZjJZdAJapq/Audio_English(US)_4.0.0.zip
-# For Japanes: https://autopatchhk.yuanshen.com/client_app/download/pc_zip/20230804185804_eTmE8EZjJZdAJapq/Audio_Japanese_4.0.0.zip
-# For Korean: https://autopatchhk.yuanshen.com/client_app/download/pc_zip/20230804185804_eTmE8EZjJZdAJapq/Audio_Korean_4.0.0.zip
-#RUN wget -c "https://autopatchhk.yuanshen.com/client_app/download/pc_zip/20230804185804_eTmE8EZjJZdAJapq/Audio_Japanese_4.0.0.zip"
-# Download the gaime itself here
-#RUN wget -c "https://autopatchhk.yuanshen.com/client_app/download/pc_zip/20230804185804_eTmE8EZjJZdAJapq/GenshinImpact_4.0.0.zip"
-#RUN unzip GenshinImpact_4.0.0.zip && unzip Audio_Japanese_4.0.0.zip
+# Run stage
+FROM openjdk:17.0.2-slim AS run_stage
 
-RUN rm -rf /opt/Grasscutter
-RUN apt clean
+COPY --from=builder /opt/Grasscutter /app
 
-EXPOSE 22102/udp
-EXPOSE 443
-EXPOSE 80
-EXPOSE 8888 
+EXPOSE 22102/udp 443/tcp 80/tcp 8888/tcp
 
-ENTRYPOINT ["java" "-jar" "grasscutter*.jar"]
+# ENTRYPOINT ["ls", "-l", "/opt/Grasscutter"]
+# ENTRYPOINT ["java", "-cp", "/opt/Grasscutter/*"]
+ENTRYPOINT ["java", "-jar", "/app/grasscutter-1.7.4.jar"]
+
+# Since we are building from scratch, we can just call the 4.0.0 package directly
+# In case 4.0.0 direct dowload link is down, we can use 3.8.0 package + diff package of 4.0.0 to achieve the same effect
+# Remember to use quotes for URLs 
+# Here I will use JP Audio Pack as example, changes links to be CN/EN/KR depending on preference
+# Download Audio Pack here then also the game itself 
+# RUN wget -c "https://autopatchhk.yuanshen.com/client_app/download/pc_zip/20230804185804_eTmE8EZjJZdAJapq/Audio_Japanese_4.0.0.zip" \
+#     --progress=bar:force && unzip Audio_Japanese_4.0.0.zip && rm Audio_Japanese_4.0.0.zip
+# RUN wget -c "https://autopatchhk.yuanshen.com/client_app/download/pc_zip/20230804185804_eTmE8EZjJZdAJapq/GenshinImpact_4.0.0.zip"\
+#     --progress=bar:force 
+# RUN unzip GenshinImpact_4.0.0.zip && rm GenshinImpact_4.0.0.zip
+

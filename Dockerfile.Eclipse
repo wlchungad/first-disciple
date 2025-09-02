@@ -28,10 +28,10 @@ WORKDIR /opt
 # For English: https://autopatchhk.yuanshen.com/client_app/download/pc_zip/20230804185804_eTmE8EZjJZdAJapq/Audio_English(US)_4.0.0.zip
 # For Japanes: https://autopatchhk.yuanshen.com/client_app/download/pc_zip/20230804185804_eTmE8EZjJZdAJapq/Audio_Japanese_4.0.0.zip
 # For Korean: https://autopatchhk.yuanshen.com/client_app/download/pc_zip/20230804185804_eTmE8EZjJZdAJapq/Audio_Korean_4.0.0.zip
-#RUN wget -c "https://autopatchhk.yuanshen.com/client_app/download/pc_zip/20230804185804_eTmE8EZjJZdAJapq/Audio_Japanese_4.0.0.zip"
+RUN wget -c "https://autopatchhk.yuanshen.com/client_app/download/pc_zip/20230804185804_eTmE8EZjJZdAJapq/Audio_Japanese_4.0.0.zip" && unzip Audio_Japanese_4.0.0.zip
 # Download the gaime itself here
-#RUN wget -c "https://autopatchhk.yuanshen.com/client_app/download/pc_zip/20230804185804_eTmE8EZjJZdAJapq/GenshinImpact_4.0.0.zip"
-#RUN unzip GenshinImpact_4.0.0.zip && unzip Audio_Japanese_4.0.0.zip
+# RUN wget -c "https://autopatchhk.yuanshen.com/client_app/download/pc_zip/20230804185804_eTmE8EZjJZdAJapq/GenshinImpact_4.0.0.zip"
+# RUN unzip 
 
 RUN rm -rf /opt/Grasscutter
 RUN apk cache clean
