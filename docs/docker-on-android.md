@@ -1,4 +1,4 @@
-# Steps to setup docker environment on Android without
+# Steps to setup docker environment on Android without root
 1. Download [Termux](https://play.google.com/store/apps/details?id=com.termux)
 
 2. Run the following in Termux:<br>
